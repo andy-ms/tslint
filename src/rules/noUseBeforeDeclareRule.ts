@@ -84,7 +84,7 @@ function walk(ctx: Lint.WalkContext<void>, checker: ts.TypeChecker): void {
         });
 
         if (!declaredBefore) {
-            ctx.addFailureAtNode(node, Rule.FAILURE_STRING(node.text));
+            ctx.addFailureAtNode(node, Rule.FAILURE_STRING(Lint.Utils.nameText(node)));
         }
     }
 }

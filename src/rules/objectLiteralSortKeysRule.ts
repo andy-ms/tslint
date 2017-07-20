@@ -72,10 +72,11 @@ function walk(ctx: Lint.WalkContext<Options>) {
                     case ts.SyntaxKind.PropertyAssignment:
                         if (property.name.kind === ts.SyntaxKind.Identifier ||
                             property.name.kind === ts.SyntaxKind.StringLiteral) {
-                            const key = ignoreCase ? property.name.text.toLowerCase() : property.name.text;
+                            const text = Lint.Utils.nameText2(property.name);
+                            const key = ignoreCase ? text.toLowerCase() : text;
                             // comparison with undefined is expected
                             if (lastKey! > key) {
-                                ctx.addFailureAtNode(property.name, Rule.FAILURE_STRING_FACTORY(property.name.text));
+                                ctx.addFailureAtNode(property.name, Rule.FAILURE_STRING_FACTORY(text));
                                 break outer; // only show warning on first out-of-order property
                             }
                             lastKey = key;

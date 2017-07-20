@@ -221,7 +221,7 @@ class MemberOrderingWalker extends Lint.AbstractWalker<Options> {
         return ts.forEachChild(sourceFile, cb);
     }
 
-    private checkMembers(members: Member[]) {
+    private checkMembers(members: ReadonlyArray<Member>) {
         let prevRank = -1;
         let prevName: string | undefined;
         for (const member of members) {
@@ -473,9 +473,10 @@ function isFunctionLiteral(node: ts.Node | undefined) {
 function nameString(name: ts.PropertyName): string {
     switch (name.kind) {
         case ts.SyntaxKind.Identifier:
+            return Lint.Utils.nameText(name);
         case ts.SyntaxKind.StringLiteral:
         case ts.SyntaxKind.NumericLiteral:
-            return (name as ts.Identifier | ts.LiteralExpression).text;
+            return name.text;
         default:
             return "";
     }

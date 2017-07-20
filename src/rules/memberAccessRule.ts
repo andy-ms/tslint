@@ -128,7 +128,7 @@ function walk(ctx: Lint.WalkContext<Options>) {
             const nameNode = node.kind === ts.SyntaxKind.Constructor
                 ? getChildOfKind(node, ts.SyntaxKind.ConstructorKeyword, ctx.sourceFile)!
                 : node.name !== undefined ? node.name : node;
-            const memberName = node.name !== undefined && node.name.kind === ts.SyntaxKind.Identifier ? node.name.text : undefined;
+            const memberName = node.name !== undefined && node.name.kind === ts.SyntaxKind.Identifier ? Lint.Utils.nameText(node.name) : undefined;
             ctx.addFailureAtNode(nameNode, Rule.FAILURE_STRING_FACTORY(typeToString(node), memberName));
         }
     }

@@ -75,6 +75,6 @@ function walk(ctx: Lint.WalkContext<void>, tc: ts.TypeChecker, promiseTypes: Set
 
     function isPromiseType(type: ts.Type): boolean {
         const { target } = type as ts.TypeReference;
-        return target !== undefined && target.symbol !== undefined && promiseTypes.has(target.symbol.name);
+        return target !== undefined && target.symbol !== undefined && promiseTypes.has(Lint.Utils.symbolName(target.symbol));
     }
 }

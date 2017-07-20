@@ -90,7 +90,7 @@ function walk(ctx: Lint.WalkContext<{ threshold: number }>): void {
             ts.forEachChild(node, cb);
             if (complexity > threshold) {
                 const { name } = node as ts.FunctionLikeDeclaration;
-                const nameStr = name !== undefined && isIdentifier(name) ? name.text : undefined;
+                const nameStr = name !== undefined && isIdentifier(name) ? Lint.Utils.nameText(name) : undefined;
                 ctx.addFailureAtNode(node, Rule.FAILURE_STRING(threshold, complexity, nameStr));
             }
             complexity = old;

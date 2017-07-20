@@ -52,9 +52,9 @@ function walk(ctx: Lint.WalkContext<string[]>) {
             isPropertyAccessExpression(node.expression) &&
             isIdentifier(node.expression.expression) &&
             node.expression.expression.text === "console" &&
-            (ctx.options.length === 0 || ctx.options.indexOf(node.expression.name.text) !== -1)) {
+            (ctx.options.length === 0 || ctx.options.indexOf(Lint.Utils.nameText(node.expression.name)) !== -1)) {
 
-            ctx.addFailureAtNode(node.expression, Rule.FAILURE_STRING_FACTORY(node.expression.name.text));
+            ctx.addFailureAtNode(node.expression, Rule.FAILURE_STRING_FACTORY(Lint.Utils.nameText(node.expression.name)));
         }
         return ts.forEachChild(node, cb);
     });

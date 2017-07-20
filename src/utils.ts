@@ -1,3 +1,5 @@
+import * as ts from "typescript";
+
 /**
  * @license
  * Copyright 2016 Palantir Technologies, Inc.
@@ -14,6 +16,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+//mv
+export function nameText(id: ts.Identifier): string {
+    return ts.unescapeIdentifier(id.text as string);
+}
+export function nameText2(id: ts.Identifier | ts.StringLiteral | ts.NumericLiteral) {
+    return id.kind === ts.SyntaxKind.Identifier ? nameText(id) : id.text;
+}
+export function symbolName(symbol: ts.Symbol) {
+    return ts.unescapeIdentifier(symbol.name as string);
+}
 
 /**
  * Enforces the invariant that the input is an array.
@@ -129,7 +142,7 @@ export function arraysAreEqual<T>(a: ReadonlyArray<T> | undefined, b: ReadonlyAr
 }
 
 /** Returns the first non-`undefined` result. */
-export function find<T, U>(inputs: T[], getResult: (t: T) => U | undefined): U | undefined {
+export function find<T, U>(inputs: ReadonlyArray<T>, getResult: (t: T) => U | undefined): U | undefined {
     for (const element of inputs) {
         const result = getResult(element);
         if (result !== undefined) {
@@ -149,7 +162,7 @@ export function flatMap<T, U>(inputs: ReadonlyArray<T>, getOutputs: (input: T, i
 }
 
 /** Returns an array of all outputs that are not `undefined`. */
-export function mapDefined<T, U>(inputs: T[], getOutput: (input: T) => U | undefined): U[] {
+export function mapDefined<T, U>(inputs: ReadonlyArray<T>, getOutput: (input: T) => U | undefined): U[] {
     const out = [];
     for (const input of inputs) {
         const output = getOutput(input);

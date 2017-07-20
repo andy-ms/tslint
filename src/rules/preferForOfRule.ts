@@ -105,7 +105,7 @@ function getForLoopHeaderInfo(forLoop: ts.ForStatement): { indexVariable: ts.Ide
     }
 
     // Must end with `i++`
-    if (!isIncremented(incrementor, indexVariable.text)) {
+    if (!isIncremented(incrementor, Lint.Utils.nameText(indexVariable))) {
         return undefined;
     }
 
@@ -115,7 +115,7 @@ function getForLoopHeaderInfo(forLoop: ts.ForStatement): { indexVariable: ts.Ide
     }
 
     const { left, operatorToken, right } = condition;
-    if (!isIdentifierNamed(left, indexVariable.text) ||
+    if (!isIdentifierNamed(left, Lint.Utils.nameText(indexVariable)) ||
             operatorToken.kind !== ts.SyntaxKind.LessThanToken ||
             !utils.isPropertyAccessExpression(right)) {
         return undefined;

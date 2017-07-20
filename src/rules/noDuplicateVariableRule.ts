@@ -74,7 +74,7 @@ class NoDuplicateVariableWalker extends Lint.AbstractWalker<Options> {
                 this.scope = oldScope;
                 return;
             }
-            if (this.options.parameters && utils.isParameterDeclaration(node)) {
+            if (this.options.parameters && utils.isParameterDeclaration(node) && node.name !== undefined) {
                 this.handleBindingName(node.name, false);
             } else if (utils.isVariableDeclarationList(node) && !utils.isBlockScopedVariableDeclarationList(node)) {
                 for (const variable of node.declarations) {
@@ -88,10 +88,11 @@ class NoDuplicateVariableWalker extends Lint.AbstractWalker<Options> {
 
     private handleBindingName(name: ts.BindingName, check: boolean) {
         if (name.kind === ts.SyntaxKind.Identifier) {
-            if (check && this.scope.has(name.text)) {
-                this.addFailureAtNode(name, Rule.FAILURE_STRING(name.text));
+            const text = Lint.Utils.nameText(name);
+            if (check && this.scope.has(text)) {
+                this.addFailureAtNode(name, Rule.FAILURE_STRING(text));
             } else {
-                this.scope.add(name.text);
+                this.scope.add(text);
             }
         } else {
             for (const e of name.elements) {

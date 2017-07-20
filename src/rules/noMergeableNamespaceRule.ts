@@ -56,7 +56,7 @@ class Walker extends Lint.AbstractWalker<void> {
 
             const { name } = statement as ts.ModuleDeclaration;
             if (name.kind === ts.SyntaxKind.Identifier) {
-                const { text } = name;
+                const text = Lint.Utils.nameText(name);
                 const prev = seen.get(text);
                 if (prev !== undefined) {
                     this.addFailureAtNode(name, Rule.failureStringFactory(text, this.getLineOfNode(prev.name)));

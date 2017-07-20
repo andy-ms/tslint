@@ -83,7 +83,7 @@ class Scope {
     public addVariable(identifier: ts.Identifier, declarationInfo: DeclarationInfo, destructuringInfo?: DestructuringInfo) {
         // block scoped variables go to the block scope, function scoped variables to the containing function scope
         const scope = declarationInfo.isBlockScoped ? this : this.functionScope;
-        scope.variables.set(identifier.text, {
+        scope.variables.set(Lint.Utils.nameText(identifier), {
             declarationInfo,
             destructuringInfo,
             identifier,
@@ -180,7 +180,7 @@ class PreferConstWalker extends Lint.AbstractWalker<Options> {
                        utils.isPrefixUnaryExpression(node) &&
                        (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
                 if (utils.isIdentifier(node.operand)) {
-                    this.scope.reassigned.add(node.operand.text);
+                    this.scope.reassigned.add(Lint.Utils.nameText(node.operand));
                 }
             } else if (utils.isBinaryExpression(node) && utils.isAssignmentKind(node.operatorToken.kind)) {
                 this.handleExpression(node.left);
@@ -206,7 +206,7 @@ class PreferConstWalker extends Lint.AbstractWalker<Options> {
     private handleExpression(node: ts.Expression): void {
         switch (node.kind) {
             case ts.SyntaxKind.Identifier:
-                this.scope.reassigned.add((node as ts.Identifier).text);
+                this.scope.reassigned.add(Lint.Utils.nameText(node as ts.Identifier));
                 break;
             case ts.SyntaxKind.ParenthesizedExpression:
                 this.handleExpression((node as ts.ParenthesizedExpression).expression);
@@ -224,11 +224,11 @@ class PreferConstWalker extends Lint.AbstractWalker<Options> {
                 for (const property of (node as ts.ObjectLiteralExpression).properties) {
                     switch (property.kind) {
                         case ts.SyntaxKind.ShorthandPropertyAssignment:
-                            this.scope.reassigned.add(property.name.text);
+                            this.scope.reassigned.add(Lint.Utils.nameText(property.name));
                             break;
                         case ts.SyntaxKind.SpreadAssignment:
                             if (property.name !== undefined) {
-                                this.scope.reassigned.add((property.name as ts.Identifier).text);
+                                this.scope.reassigned.add(Lint.Utils.nameText((property.name as ts.Identifier)));
                             } else {
                                 // handle `...(variable)`
                                 this.handleExpression(property.expression);

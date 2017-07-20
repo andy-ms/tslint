@@ -19,7 +19,7 @@ import { isClassLikeDeclaration, isInterfaceDeclaration } from "tsutils";
 import * as ts from "typescript";
 
 import * as Lint from "../index";
-import { isUpperCase } from "../utils";
+import { isUpperCase, nameText } from "../utils";
 
 export class Rule extends Lint.Rules.AbstractRule {
     /* tslint:disable:object-literal-sort-keys */
@@ -46,7 +46,7 @@ function walk(ctx: Lint.WalkContext<void>) {
     return ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
         if (isClassLikeDeclaration(node) && node.name !== undefined ||
             isInterfaceDeclaration(node)) {
-            if (!isPascalCased(node.name!.text)) {
+            if (!isPascalCased(nameText(node.name!))) {
                 ctx.addFailureAtNode(node.name!, Rule.FAILURE_STRING);
             }
         }

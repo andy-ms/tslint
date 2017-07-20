@@ -66,7 +66,7 @@ function walk(ctx: Lint.WalkContext<void>): void {
 
     function visitStatements(statements: ReadonlyArray<ts.Statement>): void {
         addFailures(getMisplacedOverloads(statements, (statement) =>
-            utils.isFunctionDeclaration(statement) && statement.name !== undefined ? statement.name.text : undefined));
+            utils.isFunctionDeclaration(statement) && statement.name !== undefined ? Lint.Utils.nameText(statement.name) : undefined));
     }
 
     function addFailures(misplacedOverloads: ReadonlyArray<ts.SignatureDeclaration>): void {
@@ -133,7 +133,7 @@ function getOverloadInfo(node: ts.SignatureDeclaration): string | { name: string
 
             switch (name.kind) {
                 case ts.SyntaxKind.Identifier:
-                    return name.text;
+                    return Lint.Utils.nameText(name);
                 case ts.SyntaxKind.ComputedPropertyName:
                     const { expression } = name;
                     return utils.isLiteralExpression(expression) ? expression.text : { name: expression.getText(), computed: true };
