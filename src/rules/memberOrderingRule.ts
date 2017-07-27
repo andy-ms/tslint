@@ -473,7 +473,6 @@ function isFunctionLiteral(node: ts.Node | undefined) {
 function nameString(name: ts.PropertyName): string {
     switch (name.kind) {
         case ts.SyntaxKind.Identifier:
-            return Lint.Utils.nameText(name);
         case ts.SyntaxKind.StringLiteral:
         case ts.SyntaxKind.NumericLiteral:
             return name.text;

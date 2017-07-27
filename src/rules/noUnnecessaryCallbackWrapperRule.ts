@@ -51,7 +51,7 @@ function walk(ctx: Lint.WalkContext<void>) {
             isCallExpression(node.body) && isIdentifier(node.body.expression) &&
             isRedundantCallback(node.parameters, node.body.arguments, node.body.expression)) {
             const start = node.getStart(ctx.sourceFile);
-            ctx.addFailure(start, node.end, Rule.FAILURE_STRING(Lint.Utils.nameText(node.body.expression)), [
+            ctx.addFailure(start, node.end, Rule.FAILURE_STRING(node.body.expression.text), [
                 Lint.Replacement.deleteFromTo(start, node.body.getStart(ctx.sourceFile)),
                 Lint.Replacement.deleteFromTo(node.body.expression.end, node.end),
             ]);

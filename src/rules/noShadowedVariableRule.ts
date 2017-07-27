@@ -58,7 +58,7 @@ class Scope {
     public addVariable(identifier: ts.Identifier, blockScoped = true) {
         // block scoped variables go to the block scope, function scoped variables to the containing function scope
         const scope = blockScoped ? this : this.functionScope;
-        const text = Lint.Utils.nameText(identifier);
+        const text = identifier.text;
         const list = scope.variables.get(text);
         if (list === undefined) {
             scope.variables.set(text, [identifier]);

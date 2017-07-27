@@ -279,7 +279,7 @@ function signatureUsesTypeParameter(sig: ts.SignatureDeclaration, isTypeParamete
     function typeContainsTypeParameter(type: ts.Node): boolean | undefined {
         if (utils.isTypeReferenceNode(type)) {
             const { typeName } = type;
-            if (typeName.kind === ts.SyntaxKind.Identifier && isTypeParameter(Lint.Utils.nameText(typeName))) {
+            if (typeName.kind === ts.SyntaxKind.Identifier && isTypeParameter(typeName.text)) {
                 return true;
             }
         }

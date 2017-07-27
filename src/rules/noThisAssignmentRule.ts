@@ -123,7 +123,7 @@ class NoThisAssignmentWalker extends Lint.AbstractWalker<Options> {
 
         switch (node.name.kind) {
             case ts.SyntaxKind.Identifier: {
-                const text = Lint.Utils.nameText(node.name);
+                const text = node.name.text;
                 if (this.variableNameIsBanned(text)) {
                     this.addFailureAtNode(node, Rule.FAILURE_STRING_FACTORY_IDENTIFIERS(text));
                 }

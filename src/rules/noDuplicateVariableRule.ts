@@ -88,7 +88,7 @@ class NoDuplicateVariableWalker extends Lint.AbstractWalker<Options> {
 
     private handleBindingName(name: ts.BindingName, check: boolean) {
         if (name.kind === ts.SyntaxKind.Identifier) {
-            const text = Lint.Utils.nameText(name);
+            const text = name.text;
             if (check && this.scope.has(text)) {
                 this.addFailureAtNode(name, Rule.FAILURE_STRING(text));
             } else {

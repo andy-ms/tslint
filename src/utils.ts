@@ -17,13 +17,6 @@ import * as ts from "typescript";
  * limitations under the License.
  */
 
-//mv
-export function nameText(id: ts.Identifier): string {
-    return ts.unescapeIdentifier(id.text as string);
-}
-export function nameText2(id: ts.Identifier | ts.StringLiteral | ts.NumericLiteral) {
-    return id.kind === ts.SyntaxKind.Identifier ? nameText(id) : id.text;
-}
 export function symbolName(symbol: ts.Symbol) {
     return ts.unescapeIdentifier(symbol.name as string);
 }

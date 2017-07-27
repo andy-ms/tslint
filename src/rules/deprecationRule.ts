@@ -54,7 +54,7 @@ function walk(ctx: Lint.WalkContext<void>, tc: ts.TypeChecker) {
             if (!isDeclaration(node)) {
                 const deprecation = getDeprecation(node, tc);
                 if (deprecation !== undefined) {
-                    ctx.addFailureAtNode(node, Rule.FAILURE_STRING(Lint.Utils.nameText(node), deprecation));
+                    ctx.addFailureAtNode(node, Rule.FAILURE_STRING(node.text, deprecation));
                 }
             }
         } else {
