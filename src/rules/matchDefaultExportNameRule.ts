@@ -61,7 +61,7 @@ function walk(ctx: Lint.WalkContext<void>, tc: ts.TypeChecker) {
         if (declarations !== undefined && declarations.length !== 0) {
             const { name } = declarations[0] as ts.NamedDeclaration;
             if (name !== undefined && name.kind === ts.SyntaxKind.Identifier && name.text !== defaultImport.text) {
-                ctx.addFailureAtNode(defaultImport, Rule.FAILURE_STRING(Lint.Utils.nameText(defaultImport), Lint.Utils.nameText(name)));
+                ctx.addFailureAtNode(defaultImport, Rule.FAILURE_STRING(defaultImport.text, name.text));
             }
         }
     }

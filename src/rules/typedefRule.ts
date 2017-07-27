@@ -203,7 +203,7 @@ class TypedefWalker extends Lint.AbstractWalker<Options> {
             if (Array.isArray(location)) {
                 this.addFailure(location.pos - 1, location.end + 1, failure);
             } else {
-                this.addFailureAtNode(location, failure);
+                this.addFailureAtNode(location as ts.Node, failure);
             }
         }
     }

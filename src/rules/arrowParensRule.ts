@@ -91,7 +91,7 @@ function parensAreOptional(node: ts.ArrowFunction) {
 }
 
 function isSimpleParameter(parameter: ts.ParameterDeclaration): boolean {
-    return parameter.name!.kind === ts.SyntaxKind.Identifier //TODO
+    return parameter.name.kind === ts.SyntaxKind.Identifier
         && parameter.dotDotDotToken === undefined
         && parameter.initializer === undefined
         && parameter.questionToken === undefined

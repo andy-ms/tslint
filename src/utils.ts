@@ -1,5 +1,3 @@
-import * as ts from "typescript";
-
 /**
  * @license
  * Copyright 2016 Palantir Technologies, Inc.
@@ -16,10 +14,6 @@ import * as ts from "typescript";
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export function symbolName(symbol: ts.Symbol) {
-    return ts.unescapeIdentifier(symbol.name as string);
-}
 
 /**
  * Enforces the invariant that the input is an array.
